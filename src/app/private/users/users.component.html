@@ -1,0 +1,63 @@
+<div class="container-fluid" id="body">
+	<div class="row content">
+		<form class="form-reset" [formGroup]="formUser" (ngSubmit)="onSubmit()" *ngIf="!messageGreat">
+			<div class="text-center">
+				<p class="title">Registro de cliente</p>
+			</div>
+			<div class="mb-3">
+				<input type = "number" min="6" max="10" formControlName="identify" class="form-control" placeholder="Número identificación" (blur)="checkIdentify($event.target.value)" required>
+			</div>
+			<div *ngIf="!formUser.get('identify').valid && formUser.get('identify').touched">
+				<p class="error-text" *ngIf="formUser.get('identify').errors['required']">
+					Campo requerido
+				</p>
+				<p class="error-text" *ngIf="formUser.get('identify').errors['min']">
+					Debe contener mínimo 6 digitos
+				  </p>
+				<p class="error-text" *ngIf="formUser.get('identify').errors['max']">
+					Debe contener máximo 10 digitos
+				  </p>
+			</div>
+			
+			<div *ngIf="showMessage">
+				<p>El usuario ya existe</p>
+			</div>
+			<div *ngIf="userValidate">
+				<div class="mb-3">
+					<input type = "text" formControlName="name" class="form-control" placeholder="Nombre" required >
+				</div>
+				<div *ngIf="!formUser.get('name').valid && formUser.get('name').touched">
+					<p class="error-text" *ngIf="formUser.get('name').errors['required']">
+						Campo requerido
+					</p>
+					<p class="error-text" *ngIf="formUser.get('name').errors['minlength']">
+						Debe contener mínimo 3 letras
+					  </p>
+				</div>
+				<div class="mb-3">
+					<input type = "text" formControlName="lastname" class="form-control" placeholder="Apellidos" required >
+				</div>
+				<div *ngIf="!formUser.get('lastname').valid && formUser.get('lastname').touched">
+					<p class="error-text" *ngIf="formUser.get('name').errors['required']">
+						Campo requerido
+					</p>
+					<p class="error-text" *ngIf="formUser.get('lastname').errors['minlength']">
+						Debe contener mínimo 3 letras
+					  </p>
+				</div>
+				<div class="mb-3">
+					<label for="birthday">Fecha de cumpleaños</label>
+					<input type = "date" formControlName="birthday" #birthday class="form-control" placeholder="" required >
+				</div>
+				<button class="btn btn-primary btn-block mb-5" type="submit">Enviar</button>
+				<div class="text-center" *ngIf="messageError">
+					<p class="error-text"> {{message}} </p>
+				</div>			
+			</div>		
+		</form>
+		<div class="text-center form-reset" *ngIf="messageGreat">
+			<p class="great-text"> {{message}} </p>
+			<button class="btn btn-primary btn-block mb-5" (click)="goToCredits()" type="button">Solicitar credito</button>
+		</div>
+	</div>
+</div>
